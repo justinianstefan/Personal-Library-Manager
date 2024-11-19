@@ -1,0 +1,107 @@
+[
+    {
+      "id": 1,
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "genre": "Fiction",
+      "description": "A gripping, heart-wrenching, and wholly remarkable tale of coming-of-age in a South poisoned by virulent prejudice."
+    },
+    {
+      "id": 2,
+      "title": "1984",
+      "author": "George Orwell",
+      "genre": "Dystopian",
+      "description": "A startling and haunting vision of the world, 1984 is so powerful that it is completely convincing from start to finish."
+    },
+    {
+      "id": 3,
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "genre": "Romance",
+      "description": "A story of love and marriage among the English gentry during the Georgian era."
+    },
+    {
+      "id": 4,
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "genre": "Classic",
+      "description": "A novel of the Jazz Age that offers a portrait of the American dream's failure."
+    },
+    {
+      "id": 5,
+      "title": "Moby Dick",
+      "author": "Herman Melville",
+      "genre": "Adventure",
+      "description": "The voyage of the whaling ship Pequod, led by Captain Ahab who is intent on finding the white whale, Moby Dick."
+    },
+    {
+      "id": 6,
+      "title": "War and Peace",
+      "author": "Leo Tolstoy",
+      "genre": "Historical Fiction",
+      "description": "A chronicle of the Napoleonic Wars' impact on Russian society, told through the eyes of several aristocratic families."
+    },
+    {
+      "id": 7,
+      "title": "The Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "genre": "Fiction",
+      "description": "The story of Holden Caulfield, a teenager growing up in 1950s New York."
+    },
+    {
+      "id": 8,
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "genre": "Fantasy",
+      "description": "Bilbo Baggins embarks on a journey through Middle-earth to help a group of dwarves reclaim their mountain home."
+    },
+    {
+      "id": 9,
+      "title": "Crime and Punishment",
+      "author": "Fyodor Dostoevsky",
+      "genre": "Philosophical Fiction",
+      "description": "A gripping psychological drama about a young man driven to commit murder and the torment that follows."
+    },
+    {
+      "id": 10,
+      "title": "Brave New World",
+      "author": "Aldous Huxley",
+      "genre": "Dystopian",
+      "description": "A vision of a future society based on technological and scientific advances that also questions human freedom."
+    },
+    {
+      "id": 11,
+      "title": "The Lord of the Rings",
+      "author": "J.R.R. Tolkien",
+      "genre": "Fantasy",
+      "description": "An epic tale of friendship and the battle between good and evil in Middle-earth."
+    },
+    {
+      "id": 12,
+      "title": "Les Misérables",
+      "author": "Victor Hugo",
+      "genre": "Historical Fiction",
+      "description": "A story of love, justice, and redemption set against the backdrop of post-revolutionary France."
+    },
+    {
+      "id": 13,
+      "title": "Jane Eyre",
+      "author": "Charlotte Brontë",
+      "genre": "Romance",
+      "description": "An orphaned governess deals with her mysterious employer and the dark secrets of his estate."
+    },
+    {
+      "id": 14,
+      "title": "The Alchemist",
+      "author": "Paulo Coelho",
+      "genre": "Adventure",
+      "description": "A young shepherd travels to Egypt in search of treasure and discovers the meaning of life."
+    },
+    {
+      "id": 15,
+      "title": "Harry Potter and the Philosopher's Stone",
+      "author": "J.K. Rowling",
+      "genre": "Fantasy",
+      "description": "The story of a young wizard discovering his magical heritage and attending Hogwarts School of Witchcraft and Wizardry."
+    }
+  ]
