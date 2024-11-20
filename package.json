@@ -4,9 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently --names \"VITE,SERVER\" --prefix-colors \"bgBlue.bold,bgGreen.bold\" \"npm run dev:vite\" \"npm run dev:server\"",
-    "dev:vite": "vite",
-    "dev:server": "node mock-server/index.js",
+    "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

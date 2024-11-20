@@ -34,8 +34,8 @@ describe("BookFormModal Component", () => {
     const modalWithin = within(modal);
 
     expect(modalWithin.getByText("Add Book")).toBeInTheDocument();
-    expect(modalWithin.getByPlaceholderText("Title")).toBeInTheDocument();
-    expect(modalWithin.getByPlaceholderText("Author")).toBeInTheDocument();
+    expect(modalWithin.getByLabelText("Title")).toBeInTheDocument();
+    expect(modalWithin.getByLabelText("Author")).toBeInTheDocument();
   });
 
   test("renders correctly for editing a book", () => {
@@ -74,16 +74,16 @@ describe("BookFormModal Component", () => {
       />
     );
 
-    fireEvent.change(screen.getByPlaceholderText("Title"), {
+    fireEvent.change(screen.getByLabelText("Title"), {
       target: { value: "New Book" },
     });
-    fireEvent.change(screen.getByPlaceholderText("Author"), {
+    fireEvent.change(screen.getByLabelText("Author"), {
       target: { value: "New Author" },
     });
-    fireEvent.change(screen.getByPlaceholderText("Genre"), {
+    fireEvent.change(screen.getByLabelText("Genre"), {
       target: { value: "Fiction" },
     });
-    fireEvent.change(screen.getByPlaceholderText("Description"), {
+    fireEvent.change(screen.getByLabelText("Description"), {
       target: { value: "A new book description" },
     });
     fireEvent.click(screen.getByRole("button", { name: /add book/i }));
@@ -108,7 +108,7 @@ describe("BookFormModal Component", () => {
       />
     );
 
-    fireEvent.change(screen.getByPlaceholderText("Title"), {
+    fireEvent.change(screen.getByLabelText("Title"), {
       target: { value: "Updated Book" },
     });
     fireEvent.click(screen.getByRole("button", { name: /update book/i }));
