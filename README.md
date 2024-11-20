@@ -1,54 +1,63 @@
 # Personal Library Manager
 
-## 📚 Description
-**Personal Library Manager** is a web application that helps users manage their personal book collections. You can add, edit, and delete books, as well as view your entire library.
+A web-based application to manage your personal library, built using **React**, **TypeScript**, and **Vite**. This project demonstrates a clean architecture with SWR for data fetching, Material-UI for styling, and integration with a backend API for full CRUD functionality.
+
+## Features
+- Manage a collection of books with full CRUD functionality (Add, Edit, Delete).
+- SWR-based data fetching with efficient caching and revalidation.
+- Responsive design using Material-UI.
+- Form validation with Formik and Yup.
+- Unit and integration tests using Vitest.
 
 ---
 
-## 🛠️ Technologies Used
-- **Frontend**: React, TypeScript
-- **State Management**: SWR for data fetching and caching
-- **API Communication**: Axios
-- **Testing**: Vitest, React Testing Library
-- **Build Tool**: Vite
-- **Hosting**: Render for deployment
+## Getting Started
 
----
+### Prerequisites
+- Node.js (>=16.0.0)
+- npm (>=8.0.0)
 
-## 🚀 How to Run the Application?
+### Installation
 
-### 1. Installation
-Make sure you have **Node.js** and **npm** (or **yarn**) installed.
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd personal-library-manager
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-### 2. Running Locally
-Start the development server:
+Clone the repository and install dependencies:
 ```bash
-npm run dev
+git clone https://github.com/JustinianStefan/Personal-Library-Manager.git
+cd Personal-Library-Manager
+npm install
 ```
 
 The application will be available at `http://localhost:3000`.
 
-### 3. Building for Production
-To create a production build:
-```bash
-npm run build
+### 📂 Project Structure
+
+```
+src/
+├── api/               # API configurations and services
+├── components/        # React components (UI)
+├── hooks/             # Custom hooks (e.g., useBooks)
+├── __tests__/         # Unit and integration tests
+└── App.tsx            # Main application file
 ```
 
-Preview the production build:
-```bash
-npm run preview
-```
+- **`api/`**: Handles API communication using Axios.
+- **`components/`**: Contains reusable components like `BookFormModal` and `BookList`.
+- **`hooks/`**: Includes custom hooks like `useBooks`, built with SWR for data fetching.
+
+### Deployment
+
+The application is deployed using **GitHub Pages**. You can access it here:  
+[Personal Library Manager](https://justinianstefan.github.io/Personal-Library-Manager/)
+
+### Technologies Used
+
+- **React 18**: Frontend library for building user interfaces.
+- **Vite**: Fast build tool and development server.
+- **TypeScript**: Type-safe JavaScript.
+- **Material-UI**: Modern, responsive UI components.
+- **SWR**: React hooks for remote data fetching.
+- **Formik & Yup**: Form handling and validation.
+- **Vitest**: Fast unit and integration testing.
+- **Axios**: HTTP client for API calls.
 
 ---
 
@@ -57,11 +66,6 @@ npm run preview
 1. Run all tests:
    ```bash
    npm run test
-   ```
-
-2. Run tests with coverage:
-   ```bash
-   npm run test -- --coverage
    ```
 
 ### Code Coverage Report
@@ -81,23 +85,6 @@ The application interacts with a backend API to perform CRUD operations on books
 | POST   | `/books`    | Add a new book           |
 | PUT    | `/books/:id`| Update an existing book  |
 | DELETE | `/books/:id`| Delete a book            |
-
----
-
-## 📂 Project Structure
-
-```
-src/
-├── api/               # API configurations and services
-├── components/        # React components (UI)
-├── hooks/             # Custom hooks (e.g., useBooks)
-├── __tests__/         # Unit and integration tests
-└── App.tsx            # Main application file
-```
-
-- **`api/`**: Handles API communication using Axios.
-- **`components/`**: Contains reusable components like `BookFormModal` and `BookList`.
-- **`hooks/`**: Includes custom hooks like `useBooks`, built with SWR for data fetching.
 
 ---
 
