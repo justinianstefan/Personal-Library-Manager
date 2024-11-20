@@ -1,50 +1,107 @@
-# React + TypeScript + Vite
+# Personal Library Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📚 Description
+**Personal Library Manager** is a web application that helps users manage their personal book collections. You can add, edit, and delete books, as well as view your entire library.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Technologies Used
+- **Frontend**: React, TypeScript
+- **State Management**: SWR for data fetching and caching
+- **API Communication**: Axios
+- **Testing**: Vitest, React Testing Library
+- **Build Tool**: Vite
+- **Hosting**: Render for deployment
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🚀 How to Run the Application?
 
-- Configure the top-level `parserOptions` property like this:
+### 1. Installation
+Make sure you have **Node.js** and **npm** (or **yarn**) installed.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd personal-library-manager
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### 2. Running Locally
+Start the development server:
+```bash
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The application will be available at `http://localhost:3000`.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### 3. Building for Production
+To create a production build:
+```bash
+npm run build
 ```
+
+Preview the production build:
+```bash
+npm run preview
+```
+
+---
+
+## 🧪 Running Tests
+
+1. Run all tests:
+   ```bash
+   npm run test
+   ```
+
+2. Run tests with coverage:
+   ```bash
+   npm run test -- --coverage
+   ```
+
+### Code Coverage Report
+The application is rigorously tested, with code coverage as follows:
+- API: **100%**
+- Components: **94%-97%**
+- Custom Hooks: **100%**
+
+---
+
+## 🌐 API Endpoints
+The application interacts with a backend API to perform CRUD operations on books. Below are the key endpoints:
+
+| Method | Endpoint    | Description              |
+|--------|-------------|--------------------------|
+| GET    | `/books`    | Fetch all books          |
+| POST   | `/books`    | Add a new book           |
+| PUT    | `/books/:id`| Update an existing book  |
+| DELETE | `/books/:id`| Delete a book            |
+
+---
+
+## 📂 Project Structure
+
+```
+src/
+├── api/               # API configurations and services
+├── components/        # React components (UI)
+├── hooks/             # Custom hooks (e.g., useBooks)
+├── __tests__/         # Unit and integration tests
+└── App.tsx            # Main application file
+```
+
+- **`api/`**: Handles API communication using Axios.
+- **`components/`**: Contains reusable components like `BookFormModal` and `BookList`.
+- **`hooks/`**: Includes custom hooks like `useBooks`, built with SWR for data fetching.
+
+---
+
+## 📝 License
+This project is licensed under the **MIT License**.
+
+Feel free to explore and make this project even better! 🚀
