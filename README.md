@@ -86,6 +86,7 @@ The application interacts with a backend API to perform CRUD operations on books
 | PUT    | `/books/:id`| Update an existing book  |
 | DELETE | `/books/:id`| Delete a book            |
 
+The back-end was extracted to a separate repo https://github.com/justinianstefan/Personal-Library-Manager-service and deployed using Render.
 ---
 
 ## 📝 License
