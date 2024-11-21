@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Dialog,
   DialogTitle,
@@ -7,11 +7,11 @@ import {
   TextField,
   Button,
   Box,
-} from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { addBook, updateBook, Book } from '../api/bookService';
-import { useBooks } from '../hooks/useBooks';
+} from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { addBook, updateBook, Book } from "../api/bookService";
+import { useBooks } from "../hooks/useBooks";
 
 interface BookModalProps {
   open: boolean;
@@ -19,16 +19,20 @@ interface BookModalProps {
   onClose: () => void;
 }
 
-const BookModal: React.FC<BookModalProps> = ({ open, initialValues, onClose }) => {
+const BookModal: React.FC<BookModalProps> = ({
+  open,
+  initialValues,
+  onClose,
+}) => {
   const { mutate } = useBooks(); // SWR mutate for revalidating data
 
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object({
-      title: Yup.string().required('Title is required'),
-      author: Yup.string().required('Author is required'),
-      genre: Yup.string().required('Genre is required'),
-      description: Yup.string().required('Description is required'),
+      title: Yup.string().required("Title is required"),
+      author: Yup.string().required("Author is required"),
+      genre: Yup.string().required("Genre is required"),
+      description: Yup.string().required("Description is required"),
     }),
     onSubmit: async (values) => {
       try {
@@ -40,14 +44,14 @@ const BookModal: React.FC<BookModalProps> = ({ open, initialValues, onClose }) =
         mutate(); // Revalidate books data
         onClose(); // Close the modal
       } catch (error) {
-        console.error('Error submitting form:', error);
+        console.error("Error submitting form:", error);
       }
     },
   });
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>{initialValues.id ? 'Edit Book' : 'Add New Book'}</DialogTitle>
+      <DialogTitle>{initialValues.id ? "Edit Book" : "Add New Book"}</DialogTitle>
       <DialogContent>
         <Box component="form" onSubmit={formik.handleSubmit} noValidate>
           <TextField
@@ -83,6 +87,7 @@ const BookModal: React.FC<BookModalProps> = ({ open, initialValues, onClose }) =
             error={formik.touched.genre && Boolean(formik.errors.genre)}
             helperText={formik.touched.genre && formik.errors.genre}
           />
+          {/* Updated TextField for Description */}
           <TextField
             fullWidth
             margin="normal"
@@ -93,6 +98,11 @@ const BookModal: React.FC<BookModalProps> = ({ open, initialValues, onClose }) =
             onBlur={formik.handleBlur}
             error={formik.touched.description && Boolean(formik.errors.description)}
             helperText={formik.touched.description && formik.errors.description}
+            multiline
+            maxRows={5} // Limits the height to 4-5 lines
+            sx={{
+              overflow: "auto", // Adds scrollbar for overflow
+            }}
           />
         </Box>
       </DialogContent>
@@ -103,7 +113,7 @@ const BookModal: React.FC<BookModalProps> = ({ open, initialValues, onClose }) =
           variant="contained"
           color="primary"
         >
-          {initialValues.id ? 'Update Book' : 'Add Book'}
+          {initialValues.id ? "Update Book" : "Add Book"}
         </Button>
         <Button onClick={onClose} variant="outlined" color="secondary">
           Cancel

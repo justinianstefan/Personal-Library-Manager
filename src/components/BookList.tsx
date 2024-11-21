@@ -1,125 +1,184 @@
 import React, { useState } from "react";
 import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  CircularProgress,
+  Card,
+  CardContent,
+  Typography,
   IconButton,
+  Collapse,
   Tooltip,
+  Fab,
+  Box,
+  Divider,
+  Stack,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Button,
 } from "@mui/material";
 import { useBooks } from "../hooks/useBooks";
 import { deleteBook, Book } from "../api/bookService";
-import BookFormModal from "./BookFormModal"; // The merged modal component
+import BookFormModal from "./BookFormModal";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import AddIcon from "@mui/icons-material/Add";
 
 const BookList: React.FC = () => {
-  const { books, error, isLoading, mutate } = useBooks(); // Fetch books with SWR
+  const { books, error, isLoading, mutate } = useBooks();
   const [open, setOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
-  // Handle opening the modal (for add or edit)
   const handleOpen = (book: Book | null = null) => {
     setSelectedBook(book);
     setOpen(true);
   };
 
-  // Handle closing the modal
   const handleClose = () => {
     setOpen(false);
     setSelectedBook(null);
   };
 
-  // Handle book deletion
-  const handleDelete = async (id: number) => {
-    try {
-      await deleteBook(id);
-      mutate(); // Revalidate data after deletion
-    } catch (error) {
-      console.error("Error deleting book:", error);
+  const handleDeleteConfirmation = (book: Book) => {
+    setSelectedBook(book);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDelete = async () => {
+    if (selectedBook) {
+      try {
+        await deleteBook(selectedBook.id!);
+        mutate();
+      } catch (error) {
+        console.error("Error deleting book:", error);
+      } finally {
+        setDeleteDialogOpen(false);
+        setSelectedBook(null);
+      }
     }
   };
 
-  if (isLoading) return <CircularProgress />;
+  const toggleCard = (index: number) => {
+    setExpandedCard(expandedCard === index ? null : index);
+  };
+
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching books</p>;
 
   return (
-    <>
-      {/* Add Book Button */}
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        data-testid="add-book-button"
-        onClick={() => handleOpen()} // Open modal with empty form
-        sx={{
-          fontWeight: "bold",
-          mb: 2,
-          alignSelf: "flex-start",
-        }}
-      >
-        Add Book
-      </Button>
-
-      {/* Book List Table */}
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Author</TableCell>
-            <TableCell>Genre</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {books?.map((book: Book) => (
-            <TableRow
-              key={book.id}
-              sx={{
-                "&:nth-of-type(odd)": {
-                  backgroundColor: "#f9f9f9",
-                },
-                "&:hover": {
-                  backgroundColor: "#eef",
-                },
-              }}
-            >
-              <TableCell>{book.title}</TableCell>
-              <TableCell>{book.author}</TableCell>
-              <TableCell>{book.genre}</TableCell>
-              <TableCell>{book.description}</TableCell>
-              <TableCell
+    <Box sx={{ position: "relative", pb: 6 }}>
+      <Stack spacing={2}>
+        {books?.map((book: Book, index: number) => (
+          <Card
+            key={book.id}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: 3,
+              pr: 1,
+              "&:hover": { boxShadow: 6 },
+              transition: "box-shadow 0.3s ease-in-out",
+              position: "relative",
+            }}
+          >
+            <CardContent sx={{ paddingTop: 2}}>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Box sx={{ flex: 1 }}>
+                  <Tooltip title={expandedCard !== index ? book.title : ""}>
+                    <Typography
+                      variant="h6"
+                      fontWeight="bold"
+                      sx={{
+                        overflow: expandedCard === index ? "visible" : "hidden",
+                        textOverflow: expandedCard === index ? "unset" : "ellipsis",
+                        display: expandedCard === index ? "block" : "-webkit-box",
+                        WebkitLineClamp: expandedCard === index ? "unset" : 2,
+                        WebkitBoxOrient: "vertical",
+                        cursor: "default",
+                      }}
+                    >
+                      {index + 1}. {book.title}
+                    </Typography>
+                  </Tooltip>
+                </Box>
+                <Tooltip title={expandedCard === index ? "Collapse" : "Expand"}>
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleCard(index);
+                    }}
+                  >
+                    {expandedCard === index ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  </IconButton>
+                </Tooltip>
+              </Stack>
+              <Box
                 sx={{
-                  minWidth: "120px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 2,
+                  mt: 1,
                 }}
               >
-                {/* Edit Button */}
-                <Tooltip title="Edit Book" arrow>
-                  <IconButton color="primary" onClick={() => handleOpen(book)}>
+                <Typography variant="body2" color="text.secondary">
+                  {book.author}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {book.genre}
+                </Typography>
+              </Box>
+              <Divider sx={{ my: 1 }} />
+              <Stack direction="row" justifyContent="flex-end" spacing={1}>
+                <Tooltip title="Edit Book">
+                  <IconButton
+                    color="primary"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOpen(book);
+                    }}
+                  >
                     <EditIcon />
                   </IconButton>
                 </Tooltip>
-
-                {/* Delete Button */}
-                <Tooltip title="Delete Book" arrow>
+                <Tooltip title="Delete Book">
                   <IconButton
                     color="error"
-                    onClick={() => handleDelete(book.id!)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteConfirmation(book);
+                    }}
                   >
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      {/* Book Form Modal */}
+              </Stack>
+            </CardContent>
+            <Collapse
+              in={expandedCard === index}
+              timeout="auto"
+              unmountOnExit
+              sx={{ px: 2, pb: 2 }}
+            >
+              <Divider sx={{ mb: 2 }}></Divider>
+              <Typography variant="body2">{book.description}</Typography>
+            </Collapse>
+          </Card>
+        ))}
+      </Stack>
+      <Fab
+        color="primary"
+        aria-label="add"
+        onClick={() => handleOpen()}
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          right: 16,
+        }}
+      >
+        <AddIcon />
+      </Fab>
       {open && (
         <BookFormModal
           open={open}
@@ -131,10 +190,35 @@ const BookList: React.FC = () => {
               description: "",
             }
           }
-          onClose={handleClose} // Close modal on form submission or cancellation
+          onClose={handleClose}
         />
       )}
-    </>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+      >
+        <DialogTitle>
+          Are you sure you want to delete{" "}
+          <strong>{selectedBook?.title}</strong>?
+        </DialogTitle>
+        <DialogActions>
+          <Button
+            onClick={() => setDeleteDialogOpen(false)}
+            variant="outlined"
+            color="secondary"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDelete}
+            variant="contained"
+            color="error"
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 

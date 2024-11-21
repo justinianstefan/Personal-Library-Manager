@@ -26,8 +26,8 @@ describe("BookList Component", () => {
 
   test("renders a list of books", () => {
     render(<BookList />);
-    expect(screen.getByText("Book 1")).toBeInTheDocument();
-    expect(screen.getByText("Book 2")).toBeInTheDocument();
+    expect(screen.getByText((content) => content.includes("1. Book 1"))).toBeInTheDocument();
+    expect(screen.getByText((content) => content.includes("2. Book 2"))).toBeInTheDocument();
     expect(screen.getByText("Fiction")).toBeInTheDocument();
     expect(screen.getByText("Non-Fiction")).toBeInTheDocument();
   });
@@ -40,7 +40,7 @@ describe("BookList Component", () => {
       mutate: vi.fn(),
     });
     render(<BookList />);
-    expect(screen.getByRole("progressbar")).toBeInTheDocument();
+    expect(screen.getByText("Loading...")).toBeInTheDocument(); // Match updated implementation
   });
 
   test("shows error message if fetching books fails", () => {
@@ -54,32 +54,66 @@ describe("BookList Component", () => {
     expect(screen.getByText("Error fetching books")).toBeInTheDocument();
   });
 
-  test("calls handleDelete when delete button is clicked", async () => {
+  test("calls deleteBook when delete button is clicked and confirmed", async () => {
+    // Mock deleteBook to resolve successfully
     (deleteBook as Mock).mockResolvedValue({});
+  
+    // Render the component
     render(<BookList />);
-    const deleteButton = screen.getAllByRole("button", { name: /delete book/i })[0];
-
+  
+    // Find the delete button for the first book
+    const deleteButton = screen.getAllByLabelText(/delete book/i)[0];
+  
+    // Click the delete button
     fireEvent.click(deleteButton);
-
-    await waitFor(() => expect(deleteBook).toHaveBeenCalledWith(1));
+  
+    // Wait for the confirmation dialog to appear
+    const dialogTitle = await screen.findByText(/Are you sure you want to delete/i);
+    expect(dialogTitle).toBeInTheDocument();
+    expect(dialogTitle).toHaveTextContent("Are you sure you want to delete Book 1?");
+  
+    // Confirm deletion by clicking the Delete button
+    const confirmButton = screen.getByRole("button", { name: /delete/i });
+    fireEvent.click(confirmButton);
+  
+    // Wait for the deleteBook mock to be called with the correct ID
+    await waitFor(() => {
+      expect(deleteBook).toHaveBeenCalledTimes(1);
+      expect(deleteBook).toHaveBeenCalledWith(1);
+    });
   });
 
   test("opens modal when Add Book button is clicked", () => {
     render(<BookList />);
-    const addButton = screen.getByRole("button", { name: /add book/i });
+    const addButton = screen.getByLabelText(/add/i); // Ensure aria-label matches
 
     fireEvent.click(addButton);
 
-    expect(screen.getByTestId("add-book-button")).toBeInTheDocument();
+    expect(screen.getByText("Add New Book")).toBeInTheDocument();
   });
 
   test("opens modal with book data when Edit button is clicked", () => {
     render(<BookList />);
-    const editButton = screen.getAllByRole("button", { name: /edit book/i })[0];
+    const editButton = screen.getAllByLabelText(/edit book/i)[0];
 
     fireEvent.click(editButton);
 
     expect(screen.getByText("Edit Book")).toBeInTheDocument();
     expect(screen.getByDisplayValue("Book 1")).toBeInTheDocument();
+  });
+
+  test("toggles book description when expand/collapse button is clicked", async () => {
+    render(<BookList />);
+    const expandButton = screen.getAllByLabelText(/expand/i)[0];
+
+    // Expand
+    fireEvent.click(expandButton);
+    expect(screen.getByText("Description 1")).toBeInTheDocument();
+
+    // Collapse
+    fireEvent.click(expandButton);
+    await waitFor(() =>
+      expect(screen.queryByText("Description 1")).not.toBeInTheDocument()
+    );
   });
 });

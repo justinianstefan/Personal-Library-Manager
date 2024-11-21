@@ -23,5 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-#ignore mock server ms
+coverage
+dist
+#ignore mock server ms / extracted
 mock-server

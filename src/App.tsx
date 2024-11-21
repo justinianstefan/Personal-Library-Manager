@@ -1,10 +1,17 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Container, Grid, Paper, Box } from '@mui/material';
-import BookList from './components/BookList';
+import React from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Box,
+  Stack,
+} from "@mui/material";
+import BookList from "./components/BookList";
 
 const App: React.FC = () => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       {/* Header */}
       <AppBar position="static">
         <Toolbar>
@@ -16,14 +23,12 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <Container sx={{ flex: 1, py: 4 }}>
-        <Grid container spacing={4}>
+        <Stack spacing={4}>
           {/* Book List Section */}
-          <Grid item xs={12} md={12}>
-            <Paper elevation={3} sx={{ p: 2 }}>
-              <BookList />
-            </Paper>
-          </Grid>
-        </Grid>
+          <Box>
+            <BookList />
+          </Box>
+        </Stack>
       </Container>
 
       {/* Sticky Footer */}
@@ -31,10 +36,10 @@ const App: React.FC = () => {
         component="footer"
         sx={{
           py: 2,
-          textAlign: 'center',
-          bgcolor: 'primary.dark',
-          color: 'white',
-          mt: 'auto', // Push footer to the bottom
+          textAlign: "center",
+          bgcolor: "primary.dark",
+          color: "white",
+          mt: "auto", // Push footer to the bottom
         }}
       >
         <Typography variant="body2">
