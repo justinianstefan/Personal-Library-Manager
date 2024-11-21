@@ -48,6 +48,11 @@ src/
 The application is deployed using **GitHub Pages**. You can access it here:  
 [Personal Library Manager](https://justinianstefan.github.io/Personal-Library-Manager/)
 
+Run deployment script that will build the app, create and push on a separate gh-pages branch
+```bash
+npm run deploy
+```
+
 ### Technologies Used
 
 - **React 18**: Frontend library for building user interfaces.
